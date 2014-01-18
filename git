@@ -7,7 +7,6 @@ blih -u login_x repository setacl NomDuRepo ramassage-tek r
 # Ajoute les droits de lecture/écriture à login_y
 blih -u login_x repository setacl NomDuRepo login_y rw 
 
-
 # Afficher les droits des utilisateurs
 blih repository getacl NomDuRepo
 
