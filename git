@@ -12,8 +12,9 @@ blih -u login_x repository setacl NomDuRepo login_y rw
 blih repository getacl NomDuRepo
 
 
+--------------------------------------------------
 En savoir plus sur les droits: google "droits ACL"
-
+--------------------------------------------------
 
 
 # Clone le dépot distant en local
@@ -28,4 +29,6 @@ git commit -m "Commentaire du commit"
 # Envoie les modifications sur le serveur
 git push origin master 
 
+--------------------------------------------------------------------------------------------
 En savoir plus sur git (c'est vraiment important!!!): git book (http://git-scm.com/book/fr).
+--------------------------------------------------------------------------------------------
