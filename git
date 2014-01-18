@@ -1,13 +1,31 @@
-blih -u login_x repository create NomDuRepo # Crée le dépot git
-blih -u login_x repository setacl NomDuRepo ramassage-tek r # Ajoute les droits de lecture à la moulinette de ramassage
-blih -u login_x repository setacl NomDuRepo login_y rw # Ajoute les droits de lecture/écriture à login_y
- 
+# Crée le dépot git
+blih -u login_x repository create NomDuRepo 
+
+# Ajoute les droits de lecture à la moulinette de ramassage
+blih -u login_x repository setacl NomDuRepo ramassage-tek r
+
+# Ajoute les droits de lecture/écriture à login_y
+blih -u login_x repository setacl NomDuRepo login_y rw 
+
+
+# Afficher les droits des utilisateurs
+blih repository getacl NomDuRepo
+
+
 En savoir plus sur les droits: google "droits ACL"
- 
-git clone login_x@git.epitech.eu:/login_x/NomDuRepo # Clone le dépot distant en local
- 
-git add . # Indexe les fichiers
-git commit -m "Commentaire du commit" # Commit sous git (sauvegarde les modifs en local)
-git push origin master # Envoie les modifications sur le serveur
- 
+
+
+
+# Clone le dépot distant en local
+git clone login_x@git.epitech.eu:/login_x/NomDuRepo 
+
+# Indexe les fichiers
+git add . 
+
+# Commit sous git (sauvegarde les modifs en local)
+git commit -m "Commentaire du commit" 
+
+# Envoie les modifications sur le serveur
+git push origin master 
+
 En savoir plus sur git (c'est vraiment important!!!): git book (http://git-scm.com/book/fr).
