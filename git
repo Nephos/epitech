@@ -16,6 +16,13 @@ En savoir plus sur les droits: google "droits ACL"
 --------------------------------------------------
 
 
+# Se connecter au repo
+eval `ssh-agent`
+ssh-add ~/.ssh/id_rsa_blih
+
+# Télécharger les fichiers du repo
+git pull
+
 # Clone le dépot distant en local
 git clone login_y@git.epitech.eu:/login_x/NomDuRepo 
 
