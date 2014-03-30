@@ -8,7 +8,7 @@ blih -u login_x repository setacl NomDuRepo ramassage-tek r
 blih -u login_x repository setacl NomDuRepo login_y rw 
 
 # Afficher les droits des utilisateurs
-blih repository getacl NomDuRepo
+blih -u login_x repository getacl NomDuRepo
 
 
 --------------------------------------------------
