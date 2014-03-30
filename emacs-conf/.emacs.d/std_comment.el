@@ -1,11 +1,11 @@
 ;;
 ;; StdComment.el for Emacs in ~/Emacs
 ;;
-;; Made by Frederic Denis
-;; Login   <fred@epita.fr>
+;; Made by paul jarysta
+;; Login   <paul@epitech.eu>
 ;;
-;; Started on  Thu Sep  9 23:34:05 1993 Frederic Denis
-;; Last update Thu Feb 14 22:31:12 2013 etienne bondot
+;; Started on  Thu Sep  9 23:34:05 1993 paul jarysta
+;; Last update Thu Feb 14 22:31:12 2013 paul jarysta
 ;;
 ;; Based on Comment routines by Isaac
 ;;
