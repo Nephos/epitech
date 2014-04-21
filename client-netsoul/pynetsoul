@@ -1,0 +1,125 @@
+#!/usr/bin/python
+
+###############################################################################
+# PyNetsoul 2.0
+# Script permettant la connexion a un serveur netsoul.
+# Celui-ci est utilisable tel-quel, directement. Il suffit juste de renseigner
+# les informations de connexion (login et mot de passe notamment). De nouvelles
+# fonctionnalites peuvent lui etre ajoutees tres facilement grace a la
+# programmation evenementielle.
+#
+# "La propriete, c'est le vol". Proudhon
+# http://epigayz.free.fr/
+###############################################################################
+
+import socket
+import hashlib
+import time
+import re
+import urllib
+import threading
+
+# Parametres a modifier pour la connexion
+server = 'ns-server.epitech.eu'
+port = 4242
+nick = 'jaryst_p'
+password = 'dhzetyKE'
+
+
+class PyNetsoul(threading.Thread):
+  def __init__(self, server, port, nick, password):
+    threading.Thread.__init__(self)
+    self.server = server
+    self.port = int(port)
+    self.nick = nick
+    self.password = password
+    self.terminated = False
+
+  def connect(self):
+    '''Connexion au serveur netsoul'''
+    while 1:
+      try:
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.connect((self.server, self.port))
+        data = self.sock.recv(1024).split(' ')
+        self.send('auth_ag ext_user none none')
+        token = hashlib.md5('%s-%s/%s%s' % (data[2], data[3],
+                                            data[4], self.password)).hexdigest()
+        self.send('ext_user_log %s %s pynetsoul none' % (self.nick, token))
+        self.send('user_cmd state actif')
+      except:
+        self.sock.close()
+        time.sleep(2)
+      else:
+        break
+
+  def reconnect(self):
+    self.sock.close()
+    time.sleep(2)
+    self.connect()
+
+  def send(self, data):
+    '''Envoyer des donnees brutes sur la socket'''
+    self.sock.send('%s\r\n' % data)
+
+  def send_msg(self, nick, msg):
+    '''Envoyer un message netsoul a un autre utilisateur'''
+    self.send('user_cmd msg_user %s msg %s' % (nick, urllib.quote(msg)))
+
+  def get_msg(self, data):
+    '''Recuperer le message envoye par un autre utilisateur'''
+    regex = re.compile(r'.*?msg (.*?) dst=.*?$')
+    try:
+      msg = regex.findall(data)[0]
+      return urllib.unquote(msg)
+    except:
+      return ''
+
+  def get_src(self, data):
+    '''Recuperer la source d'un message'''
+    regex = re.compile(r'.*?:.*?:.*?:(.*?)@.*?')
+    try:
+      src = regex.findall(data)[0]
+      return src
+    except:
+      return ''
+
+  def ping(self, data):
+    '''Repondre au ping envoye par le serveur'''
+    self.sock.send('ping ' + data.split(' ')[1])
+
+  def is_privmsg(self, data):
+    '''Retourner True si les donnees recues sont un message utilisateur'''
+    regex = re.compile(r'.*?msg.*?dst=.*?$')
+    if regex.search(data):
+      return True
+    return False
+
+  def on_privmsg(self, source, msg):
+    '''Gestionnaire de message utilisateur'''
+    pass
+
+  def on_servmsg(self, data):
+    '''Gestionnaire de message serveur'''
+    if data[:5] == 'ping ':
+      self.ping(data)
+
+  def run(self):
+    '''Boucle d'ecoute avec execution des actions personnalisees'''
+    while not self.terminated:
+      data = self.sock.recv(1024)
+      if len(data) == 0:
+        self.reconnect()
+      elif self.is_privmsg(data):
+        self.on_privmsg(self.get_src(data), self.get_msg(data))
+      else:
+        self.on_servmsg(data)
+
+  def stop(self):
+    self.terminated = True
+
+
+if __name__ == '__main__':
+  bot = PyNetsoul(server, port, nick, password)
+  bot.connect()
+  bot.start()
