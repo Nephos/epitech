@@ -22,8 +22,8 @@ import threading
 # Parametres a modifier pour la connexion
 server = 'ns-server.epitech.eu'
 port = 4242
-nick = 'jaryst_p'
-password = 'dhzetyKE'
+nick = 'login_x'
+password = 'mdp_socks'
 
 
 class PyNetsoul(threading.Thread):
