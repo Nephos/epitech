@@ -15,11 +15,11 @@ use Digest::MD5  qw(md5 md5_hex md5_base64);
 
 start:
 
-my $username = 'jaryst_p';
+my $username = 'login_x';
 my $location = 'At Home (Daemon)';
 my $data     = 'Psykokwak NS v0.2';
-my $password = 'dhzetyKE';
-my $automessage = "Desolé, je suis un daemon netsoul et je ne gere pas les messages...";
+my $password = 'mdp socks';
+my $automessage = "Desolï¿½, je suis un daemon netsoul et je ne gere pas les messages...";
 my $verbose = 0;
 my $timeout = 120;
 
